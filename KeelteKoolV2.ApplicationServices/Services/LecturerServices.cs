@@ -14,9 +14,34 @@ public class LecturerServices : ILecturerServices
         _context = context;
     }
 
-    public Task<Lecturer> Create(LecturerDTO dto)
+    public async Task<Lecturer> Create(LecturerDTO dto)
     {
-        throw new NotImplementedException();
+        if (dto == null)
+            return null;
+
+        var domain = new Lecturer();
+        domain.Id = Guid.NewGuid();
+
+        if (dto.FirstName.Length < 1)
+        {
+            dto.FirstName = "John";
+        }
+        if (dto.LastName.Length < 1)
+        {
+            dto.LastName = "Doe";
+        }
+
+        domain.FirstName = dto.FirstName;
+        domain.LastName = dto.LastName;
+        domain.Qualifications = dto.Qualifications;
+        domain.UserID = dto.UserID;
+        domain.CreatedAt = DateTime.Now;
+        domain.ModifiedAt = DateTime.Now;
+
+        await _context.Lecturers.AddAsync(domain);
+        await _context.SaveChangesAsync();
+        //tagastatakse domeenile kuuluv objekt
+        return domain;
     }
 
     public Task<Lecturer> Delete(Guid id)

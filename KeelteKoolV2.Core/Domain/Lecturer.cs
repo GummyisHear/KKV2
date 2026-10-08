@@ -6,7 +6,7 @@ public class Lecturer
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Qualifications { get; set; }
-    public string UserID { get; set; }
+    public string? UserID { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
 }
