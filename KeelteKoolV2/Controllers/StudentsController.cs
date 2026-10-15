@@ -1,6 +1,4 @@
-﻿using KeelteKoolV2.Core.DTO;
-using KeelteKoolV2.Data;
-using KeelteKoolV2.Models.LanguageCourses;
+﻿using KeelteKoolV2.Data;
 using KeelteKoolV2.Models.Students;
 using Microsoft.AspNetCore.Mvc;
 

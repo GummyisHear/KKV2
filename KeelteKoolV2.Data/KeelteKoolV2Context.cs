@@ -15,4 +15,5 @@ public class KeelteKoolV2Context : IdentityDbContext<ApplicationUser>
     public DbSet<LanguageCourse> LanguageCourses { get; set; }
     public DbSet<Lecturer> Lecturers { get; set; }
     public DbSet<FileToDatabase> Files { get; set; }
+    public DbSet<Student> Students { get; set; }
 }

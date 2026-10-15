@@ -8,7 +8,8 @@ public class Student
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string? UserID { get; set; }
-    public List<LanguageCourseDTO> LanguageCourses { get; set; }
+    public List<LanguageCourseDTO> LanguageCourses { get; set; } = [];
+    public List<string> Grades { get; set; } = [];
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
 }
