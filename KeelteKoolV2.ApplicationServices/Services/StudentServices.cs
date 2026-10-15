@@ -49,13 +49,32 @@ public class StudentServices : IStudentServices
         return result;
     }
 
-    public Task<Student> Delete(Guid id)
+    public async Task<Student> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var entity = await _context.Students.FirstOrDefaultAsync(x => x.Id == id);
+
+        if (entity == null)
+            return null;
+
+        _context.Students.Remove(entity);
+        await _context.SaveChangesAsync();
+
+        return entity;
     }
 
-    public Task<Student> Update(StudentDTO dto)
+    public async Task<Student> UpdateAsync(Guid id, StudentDTO dto)
     {
-        throw new NotImplementedException();
+        var entity = await _context.Students.FirstOrDefaultAsync(x => x.Id == id);
+
+        if (entity == null)
+            return null;
+
+        entity.FirstName = dto.FirstName;
+        entity.LastName = dto.LastName;
+        entity.LanguageCourses = dto.LanguageCourses ?? [];
+        entity.Grades = dto.Grades ?? [];
+
+        await _context.SaveChangesAsync();
+        return entity;
     }
 }
