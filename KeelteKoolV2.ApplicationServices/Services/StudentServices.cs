@@ -2,6 +2,7 @@
 using KeelteKoolV2.Core.DTO;
 using KeelteKoolV2.Core.ServiceInterface;
 using KeelteKoolV2.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace KeelteKoolV2.ApplicationServices.Services;
 
@@ -30,6 +31,7 @@ public class StudentServices : IStudentServices
             FirstName = dto.FirstName,
             LastName = dto.LastName,
             LanguageCourses = dto.LanguageCourses ?? [],
+            Grades = dto.Grades ?? [],
             UserID = dto.UserID,
             CreatedAt = DateTime.Now,
             ModifiedAt = DateTime.Now
@@ -41,12 +43,13 @@ public class StudentServices : IStudentServices
         return student;
     }
 
-    public Task<Student> Delete(Guid id)
+    public async Task<Student> DetailAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Students.FirstOrDefaultAsync(x => x.Id == id);
+        return result;
     }
 
-    public Task<Student> DetailAsync(Guid id)
+    public Task<Student> Delete(Guid id)
     {
         throw new NotImplementedException();
     }

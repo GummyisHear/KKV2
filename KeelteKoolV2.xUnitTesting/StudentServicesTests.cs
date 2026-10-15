@@ -19,6 +19,21 @@ public class StudentServicesTests : TestBase
         Assert.NotNull(result);
     }
 
+    [Fact]
+    public async Task Should_ReturnStudentDetails_WhenIdIsProvided()
+    {
+        //ülesseade
+        var dto = CreateDefaultDTO();
+
+        // tegevus
+        var created = await Svc<IStudentServices>().Create(dto);
+        var result = await Svc<IStudentServices>().DetailAsync(created.Id);
+
+        //kontroll
+        Assert.NotNull(result);
+        Assert.Equal(created.Id, result.Id);
+    }
+
     private StudentDTO CreateDefaultDTO()
     {
         return new StudentDTO
