@@ -115,7 +115,7 @@ namespace KeelteKoolV2.Data.Migrations
 
                     b.HasKey("ImageID");
 
-                    b.ToTable("FilesToDatabase");
+                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("KeelteKoolV2.Core.Domain.LanguageCourse", b =>
@@ -179,7 +179,6 @@ namespace KeelteKoolV2.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserID")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
