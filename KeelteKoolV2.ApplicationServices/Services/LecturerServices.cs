@@ -2,7 +2,7 @@
 using KeelteKoolV2.Core.DTO;
 using KeelteKoolV2.Core.ServiceInterface;
 using KeelteKoolV2.Data;
-
+using Microsoft.EntityFrameworkCore;
 namespace KeelteKoolV2.ApplicationServices.Services;
 
 public class LecturerServices : ILecturerServices
@@ -49,9 +49,12 @@ public class LecturerServices : ILecturerServices
         throw new NotImplementedException();
     }
 
-    public Task<Lecturer> DetailAsync(Guid id)
+    public async Task<Lecturer> DetailAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Lecturers
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        return result;
     }
 
     public Task<Lecturer> Update(LecturerDTO dto)
