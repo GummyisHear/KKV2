@@ -37,6 +37,10 @@ public class LecturerServicesTests : TestBase
     public async Task Should_UpdateFirstNameWithNewData_WhenDataIsDifferentFromDB()
     {
         //ülesseade
+        var dto = CreateDefaultDTO();
+        var created = await Svc<ILecturerServices>().Create(dto);
+        var originalName = created.FirstName;
+
         var newDto = new LecturerDTO
         {
             Id = created.Id,
@@ -45,10 +49,6 @@ public class LecturerServicesTests : TestBase
             Qualifications = created.Qualifications,
             UserID = created.UserID
         };
-
-        var newDto = new LecturerDTO();
-        dto.Id = created.Id;
-        dto.FirstName = "Uusnimi";
 
         // tegevus
         var result = await Svc<ILecturerServices>().Update(newDto);
