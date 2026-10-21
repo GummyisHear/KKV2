@@ -6,5 +6,5 @@ public class LecturerCreateUpdateViewModel
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Qualifications { get; set; }
-    public string UserID { get; set; }
+    public string? UserID { get; set; }
 }

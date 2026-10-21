@@ -34,4 +34,37 @@ public class LecturerFrontendTests
         Assert.Contains("Lecturer", pageSource);
         Assert.Contains("Test", pageSource);
     }
+
+    [Fact]
+    public void Should_ShowLecturerDetails_FromFrontend()
+    {
+        using IWebDriver driver = new FirefoxDriver();
+
+        driver.Navigate().GoToUrl($"{BaseUrl}/Lecturers");
+
+        driver.FindElement(By.Id("IndexCreateNewLecturer_BTN")).Click();
+
+        driver.FindElement(By.Id("CU_Lecturer_FirstName"))
+            .SendKeys("DetailsTest");
+
+        driver.FindElement(By.Id("CU_Lecturer_LastName"))
+            .SendKeys("LecturerTest");
+
+        driver.FindElement(By.Id("CU_Lecturer_Qualifications"))
+            .SendKeys("Teacher");
+
+        driver.FindElement(By.Id("CU_Save_BTN")).Click();
+
+        driver.FindElement(By.Id("IndexTableLecturerDetails_BTN")).Click();
+
+        var firstName = driver.FindElement(By.Id("DD_Lecturer_FirstName")).Text;
+        var lastName = driver.FindElement(By.Id("DD_Lecturer_LastName")).Text;
+        var qualifications = driver.FindElement(By.Id("DD_Lecturer_Qualifications")).Text;
+
+        Assert.Equal("DetailsTest", firstName);
+        Assert.Equal("LecturerTest", lastName);
+        Assert.Equal("Teacher", qualifications);
+        Assert.Contains("Lecturer Details", driver.PageSource);
+        Assert.Contains("/Lecturers/Details", driver.Url);
+    }
 }
