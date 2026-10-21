@@ -26,8 +26,8 @@ public class LecturerServicesTests : TestBase
         var dto = CreateDefaultDTO();
 
         // tegevus
-        await Svc<ILecturerServices>().Create(dto);
-        var result = await Svc<ILecturerServices>().DetailAsync(dto.Id);
+        var created = await Svc<ILecturerServices>().Create(dto);
+        var result = await Svc<ILecturerServices>().DetailAsync(created.Id);
 
         //kontroll
         Assert.NotNull(result);
@@ -37,9 +37,14 @@ public class LecturerServicesTests : TestBase
     public async Task Should_UpdateFirstNameWithNewData_WhenDataIsDifferentFromDB()
     {
         //ülesseade
-        var dto = CreateDefaultDTO();
-        var created = await Svc<ILecturerServices>().Create(dto);
-        var originalName = created.FirstName;
+        var newDto = new LecturerDTO
+        {
+            Id = created.Id,
+            FirstName = "Uusnimi",
+            LastName = created.LastName,
+            Qualifications = created.Qualifications,
+            UserID = created.UserID
+        };
 
         var newDto = new LecturerDTO();
         dto.Id = created.Id;
@@ -58,10 +63,11 @@ public class LecturerServicesTests : TestBase
     {
         //ülesseade
         var dto = CreateDefaultDTO();
+        var created = await Svc<ILecturerServices>().Create(dto);
 
         // tegevus
-        await Svc<ILecturerServices>().Delete(dto.Id);
-        var result = Svc<ILecturerServices>().DetailAsync(dto.Id);
+        await Svc<ILecturerServices>().Delete(created.Id);
+        var result = await Svc<ILecturerServices>().DetailAsync(created.Id);
 
         //kontroll
         Assert.Null(result);
