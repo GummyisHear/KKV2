@@ -44,9 +44,20 @@ public class LecturerServices : ILecturerServices
         return domain;
     }
 
-    public Task<Lecturer> Delete(Guid id)
+    public async Task<Lecturer> Delete(Guid id)
     {
-        throw new NotImplementedException();
+        var lecturer = await _context.Lecturers
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (lecturer == null)
+        {
+            return null;
+        }
+
+        _context.Lecturers.Remove(lecturer);
+        await _context.SaveChangesAsync();
+
+        return lecturer;
     }
 
     public async Task<Lecturer> DetailAsync(Guid id)
