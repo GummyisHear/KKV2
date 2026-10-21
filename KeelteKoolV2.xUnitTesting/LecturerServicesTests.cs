@@ -113,4 +113,92 @@ public class LecturerServicesTests : TestBase
             Qualifications = "Test"
         };
     }
+
+    //uut testid -----------------------------------------------------------------
+
+    /// <summary>
+    /// Kontrollib, et olematu ID korral Lecturer andmeid ei tagastata.
+    /// </summary>
+    [Fact]
+    public async Task Should_ReturnNull_WhenLecturerIdDoesNotExist()
+    {
+        //ülesseade
+        var wrongId = Guid.NewGuid();
+
+        //tegevus
+        var result = await Svc<ILecturerServices>().DetailAsync(wrongId);
+
+        //kontroll
+        Assert.Null(result);
+    }
+
+    /// <summary>
+    /// Kontrollib, et olematu Lecturer ID uuendamisel tagastatakse null.
+    /// </summary>
+    [Fact]
+    public async Task Should_ReturnNull_WhenUpdatingNonExistingLecturer()
+    {
+        //ülesseade
+        var dto = CreateDefaultDTO();
+        dto.Id = Guid.NewGuid();
+
+        //tegevus
+        var result = await Svc<ILecturerServices>().Update(dto);
+
+        //kontroll
+        Assert.Null(result);
+    }
+
+    /// <summary>
+    /// Kontrollib, et olematu Lecturer ID kustutamisel tagastatakse null.
+    /// </summary>
+    [Fact]
+    public async Task Should_ReturnNull_WhenDeletingNonExistingLecturer()
+    {
+        //ülesseade
+        var wrongId = Guid.NewGuid();
+
+        //tegevus
+        var result = await Svc<ILecturerServices>().Delete(wrongId);
+
+        //kontroll
+        Assert.Null(result);
+    }
+
+    /// <summary>
+    /// Kontrollib, et tühja eesnime korral määratakse Lecturer eesnimeks vaikimisi John.
+    /// </summary>
+    [Fact]
+    public async Task Should_SetDefaultFirstName_WhenFirstNameIsEmpty()
+    {
+        //ülesseade
+        var dto = CreateDefaultDTO();
+        dto.FirstName = "";
+
+        //tegevus
+        var result = await Svc<ILecturerServices>().Create(dto);
+
+        //kontroll
+        Assert.NotNull(result);
+        Assert.Equal("John", result.FirstName);
+    }
+
+    /// <summary>
+    /// Kontrollib, et tühja perekonnanime korral määratakse Lecturer perekonnanimeks vaikimisi Doe.
+    /// </summary>
+    [Fact]
+    public async Task Should_SetDefaultLastName_WhenLastNameIsEmpty()
+    {
+        //ülesseade
+        var dto = CreateDefaultDTO();
+        dto.LastName = "";
+
+        //tegevus
+        var result = await Svc<ILecturerServices>().Create(dto);
+
+        //kontroll
+        Assert.NotNull(result);
+        Assert.Equal("Doe", result.LastName);
+    }
+
 }
