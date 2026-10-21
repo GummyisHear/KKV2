@@ -1,12 +1,17 @@
 @model KeelteKoolV2.Models.Lecturers.LecturerCreateUpdateViewModel
 
 @{
-    ViewData["Title"] = "Lecturer";
+    ViewData["Title"] = Model.Id == Guid.Empty ? "Create Lecturer" : "Update Lecturer";
 }
 
-<h1>Lecturer</h1>
+<h1>
+    @(Model.Id == Guid.Empty ? "Create Lecturer" : "Update Lecturer")
+</h1>
 
-<form asp-action="Create" method="post">
+<form asp-action="@(Model.Id == Guid.Empty ? "Create" : "Update")" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
     <div class="form-group">
         <label asp-for="FirstName"></label>
         <input asp-for="FirstName" class="form-control" />
@@ -29,7 +34,9 @@
 
     <br />
 
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">
+        @(Model.Id == Guid.Empty ? "Create" : "Update")
+    </button>
 
     <a asp-action="Index" class="btn btn-secondary">
         Back

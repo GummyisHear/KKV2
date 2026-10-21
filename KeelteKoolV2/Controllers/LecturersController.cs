@@ -88,4 +88,53 @@ public class LecturersController : Controller
 
         return View(vm);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Update(Guid id)
+    {
+        var lecturer = await _lecturerServices.DetailAsync(id);
+
+        if (lecturer == null)
+        {
+            return NotFound();
+        }
+
+        var vm = new LecturerCreateUpdateViewModel
+        {
+            Id = lecturer.Id,
+            FirstName = lecturer.FirstName,
+            LastName = lecturer.LastName,
+            Qualifications = lecturer.Qualifications,
+            UserID = lecturer.UserID
+        };
+
+        return View("CreateUpdate", vm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update(LecturerCreateUpdateViewModel vm)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View("CreateUpdate", vm);
+        }
+
+        var dto = new LecturerDTO
+        {
+            Id = vm.Id,
+            FirstName = vm.FirstName,
+            LastName = vm.LastName,
+            Qualifications = vm.Qualifications,
+            UserID = vm.UserID
+        };
+
+        var result = await _lecturerServices.Update(dto);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
 }
