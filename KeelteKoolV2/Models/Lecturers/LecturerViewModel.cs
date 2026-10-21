@@ -6,5 +6,5 @@ public class LecturerViewModel
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Qualifications { get; set; }
-    public Guid? UserID { get; set; }
+    public string UserID { get; set; }
 }
