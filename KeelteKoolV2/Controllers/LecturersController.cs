@@ -66,4 +66,26 @@ public class LecturersController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(Guid id)
+    {
+        var lecturer = await _lecturerServices.DetailAsync(id);
+
+        if (lecturer == null)
+        {
+            return NotFound();
+        }
+
+        var vm = new LecturerViewModel
+        {
+            Id = lecturer.Id,
+            FirstName = lecturer.FirstName,
+            LastName = lecturer.LastName,
+            Qualifications = lecturer.Qualifications,
+            UserID = lecturer.UserID
+        };
+
+        return View(vm);
+    }
 }
