@@ -7,10 +7,15 @@
 <h1>Lecturers</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a id="IndexCreateNewLecturer_BTN"
+       asp-action="Create"
+       asp-controller="Lecturers"
+       class="btn btn-primary">
+        Create New
+    </a>
 </p>
 
-<table class="table">
+<table id="IndexTable" class="table">
     <thead>
         <tr>
             <th>First name</th>
@@ -27,10 +32,27 @@
                 <td>@item.FirstName</td>
                 <td>@item.LastName</td>
                 <td>@item.Qualifications</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Update" asp-route-id="@item.Id">Update</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                <td id="IndexTableLecturerActions">
+                    <a id="IndexTableLecturerDetails_BTN"
+                       asp-action="Details"
+                       asp-route-id="@item.Id">
+                        Details
+                    </a>
+                    |
+
+                    <a id="IndexTableLecturerUpdate_BTN"
+                       asp-action="Update"
+                       asp-route-id="@item.Id">
+                        Update
+                    </a>
+                    |
+
+                    <a id="IndexTableLecturerDelete_BTN"
+                       asp-action="Delete"
+                       asp-route-id="@item.Id">
+                        Delete
+                    </a>
                 </td>
             </tr>
         }

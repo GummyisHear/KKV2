@@ -14,31 +14,43 @@
 
     <div class="form-group">
         <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" />
+        <input id="CU_Lecturer_FirstName"
+               asp-for="FirstName"
+               class="form-control" />
     </div>
 
     <div class="form-group">
         <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" />
+        <input id="CU_Lecturer_LastName"
+               asp-for="LastName"
+               class="form-control" />
     </div>
 
     <div class="form-group">
         <label asp-for="Qualifications"></label>
-        <input asp-for="Qualifications" class="form-control" />
+        <input id="CU_Lecturer_Qualifications"
+               asp-for="Qualifications"
+               class="form-control" />
     </div>
 
     <div class="form-group">
         <label asp-for="UserID"></label>
-        <input asp-for="UserID" class="form-control" />
+        <input id="CU_Lecturer_UserID"
+               asp-for="UserID"
+               class="form-control" />
     </div>
 
     <br />
 
-    <button type="submit" class="btn btn-primary">
+    <button id="CU_Save_BTN"
+            type="submit"
+            class="btn btn-primary">
         @(Model.Id == Guid.Empty ? "Create" : "Update")
     </button>
 
-    <a asp-action="Index" class="btn btn-secondary">
+    <a id="CU_Cancel_BTN"
+       asp-action="Index"
+       class="btn btn-secondary">
         Back
     </a>
 </form>
