@@ -72,6 +72,85 @@ public class StudentServicesTests : TestBase
         Assert.NotEqual(oldName, result.FirstName);
     }
 
+    /* ~~--====--~~ Lisa 5 testid ~~--====--~~ */
+
+    [Fact]
+    public async Task Should_UpdateStudentGrades_WhenNewDataIsProvided()
+    {
+        // ülesseade
+        var dto = CreateDefaultDTO();
+
+        // tegevus
+        var created = await Svc<IStudentServices>().Create(dto);
+        var oldGrades = created.Grades.ToList(); // kopeeri list
+
+        dto.Grades[0] = "5";
+        var result = await Svc<IStudentServices>().UpdateAsync(created.Id, dto);
+
+        // kontroll
+        Assert.NotNull(result);
+        Assert.True(oldGrades.Count > 0);
+        Assert.True(result.Grades.Count > 0);
+        Assert.NotEqual(oldGrades[0], result.Grades[0]);
+    }
+
+    [Fact]
+    public async Task Should_UseDefaultNames_WhenNamesAreEmpty()
+    {
+        // ülesseade
+        var dto = CreateDefaultDTO();
+        dto.FirstName = "";
+        dto.LastName = "";
+
+        // tegevus
+        var result = await Svc<IStudentServices>().Create(dto);
+
+        // kontroll
+        Assert.Equal("John", result.FirstName);
+        Assert.Equal("Doe", result.LastName);
+    }
+
+    [Fact]
+    public async Task Should_ReturnNull_WhenUpdatingNonExistentStudent()
+    {
+        // tegevus
+        var result = await Svc<IStudentServices>().UpdateAsync(Guid.NewGuid(), CreateDefaultDTO());
+
+        // kontroll
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task Should_KeepOldName_WhenUpdateNameIsEmpty()
+    {
+        var dto = CreateDefaultDTO();
+        var created = await Svc<IStudentServices>().Create(dto);
+
+        dto.FirstName = "";
+        var result = await Svc<IStudentServices>().UpdateAsync(created.Id, dto);
+
+        Assert.Equal("Nikita", result.FirstName);
+    }
+
+    [Fact]
+    public async Task Should_KeepGrades_WhenUpdateGradesIsNull()
+    {
+        // ülesseade
+        var dto = CreateDefaultDTO();
+
+        // tegevus
+        var created = await Svc<IStudentServices>().Create(dto);
+        var oldGrades = created.Grades.ToList(); // kopeeri list
+
+        dto.Grades = null;
+        var result = await Svc<IStudentServices>().UpdateAsync(created.Id, dto);
+
+        // kontroll
+        Assert.NotNull(result);
+        Assert.NotNull(result.Grades);
+        Assert.Equal(oldGrades, result.Grades);
+    }
+
     private StudentDTO CreateDefaultDTO()
     {
         return new StudentDTO

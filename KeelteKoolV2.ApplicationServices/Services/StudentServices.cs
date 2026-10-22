@@ -69,10 +69,14 @@ public class StudentServices : IStudentServices
         if (entity == null)
             return null;
 
-        entity.FirstName = dto.FirstName;
-        entity.LastName = dto.LastName;
-        entity.LanguageCourses = dto.LanguageCourses ?? [];
-        entity.Grades = dto.Grades ?? [];
+        if (!string.IsNullOrEmpty(dto.FirstName))
+            entity.FirstName = dto.FirstName;
+        if (!string.IsNullOrEmpty(dto.LastName))
+            entity.LastName = dto.LastName;
+        if (dto.LanguageCourses != null)
+            entity.LanguageCourses = dto.LanguageCourses;
+        if (dto.Grades != null)
+            entity.Grades = dto.Grades;
 
         await _context.SaveChangesAsync();
         return entity;

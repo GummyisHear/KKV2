@@ -11,7 +11,7 @@ public class StudentDTO
     public List<IFormFile>? Files { get; set; }
     public IEnumerable<FileToDatabaseDTO>? Image { get; set; } = new List<FileToDatabaseDTO>();
     public List<LanguageCourseDTO>? LanguageCourses { get; set; } = [];
-    public List<string> Grades { get; set; } = [];
+    public List<string>? Grades { get; set; } = [];
     public DateTime? CreatedAt { get; set; }
     public DateTime? ModifiedAt { get; set; }
 }
