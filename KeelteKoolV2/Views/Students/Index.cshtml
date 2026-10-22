@@ -1,0 +1,40 @@
+﻿@model IEnumerable<KeelteKoolV2.Models.Students.StudentViewModel>
+@{
+    int rownumber = 1;
+    ViewBag.Title = "Õpilased";
+}
+
+<div>
+    <a id="IndexCreateNewStudent_BTN" asp-action="Create" asp-controller="Students" class="btn btn-dark">Lisa uus õpilane</a>
+</div>
+
+<div class="h1">
+    Õpilased
+</div>
+
+<table id="IndexTable" class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Nr</th>
+            <th scope="col">Eesnimi</th>
+            <th scope="col">Perekonnanimi</th>
+            <th scope="col">Tegevused</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@rownumber</td>
+                <td class="IndexTableStudentFirstName">@student.FirstName</td>
+                <td class="IndexTableStudentLastName">@student.LastName</td>
+                <td class="IndexTableStudentActions">
+                    <a class="IndexTableStudentDetails_BTN btn btn-secondary" asp-action="Details" asp-controller="Students" asp-route-id="@student.Id">Andmed</a>
+                    <a class="IndexTableStudentUpdate_BTN btn btn-warning" asp-action="Update" asp-controller="Students" asp-route-id="@student.Id">Muuda</a>
+                    <a class="IndexTableStudentDelete_BTN btn btn-danger" asp-action="Delete" asp-controller="Students" asp-route-id="@student.Id">Kustuta</a>
+                </td>
+            </tr>
+            rownumber++;
+        }
+    </tbody>
+</table>
