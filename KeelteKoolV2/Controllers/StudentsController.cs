@@ -1,6 +1,7 @@
 ﻿using KeelteKoolV2.Core.Domain;
 using KeelteKoolV2.Core.DTO;
 using KeelteKoolV2.Core.ServiceInterface;
+using KeelteKoolV2.Core.Utils;
 using KeelteKoolV2.Data;
 using KeelteKoolV2.Models.Students;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,8 @@ public class StudentsController : Controller
             {
                 Id = x.Id,
                 FirstName = x.FirstName,
-                LastName = x.LastName
+                LastName = x.LastName,
+                Grades = x.Grades.ToCommaSepString()
             })
             .ToList();
         return View(result);
@@ -95,26 +97,91 @@ public class StudentsController : Controller
     [HttpGet]
     public async Task<IActionResult> Update(Guid id)
     {
-        return RedirectToAction(nameof(Index));
+        if (id == Guid.Empty)
+        {
+            return NotFound();
+        }
+
+        var student = await _studentServices.DetailAsync(id);
+
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        var vm = new StudentCreateUpdateViewModel
+        {
+            Id = student.Id,
+            FirstName = student.FirstName,
+            LastName = student.LastName,
+            Grades = string.Join(", ", student.Grades ?? [])
+        };
+
+        return View("CreateUpdate", vm);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Update(StudentCreateUpdateViewModel vm)
     {
+        if (vm == null || !vm.Id.HasValue || vm.Id.Value == Guid.Empty)
+        {
+            return NotFound();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View("CreateUpdate", vm);
+        }
+
+        var dto = new StudentDTO
+        {
+            FirstName = vm.FirstName,
+            LastName = vm.LastName,
+            Grades = ParseGrades(vm.Grades)
+        };
+
+        var result = await _studentServices.UpdateAsync(vm.Id.Value, dto);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public async Task<IActionResult> Delete(Guid id)
     {
-        return RedirectToAction(nameof(Index));
+        if (id == Guid.Empty)
+        {
+            return NotFound();
+        }
+
+        var student = await _studentServices.DetailAsync(id);
+
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        ViewData["ViewType"] = "delete";
+
+        return View("DetailsDelete", ToViewModel(student));
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(Guid id)
     {
+        var deleted = await _studentServices.DeleteAsync(id);
+
+        if (deleted == null)
+        {
+            return NotFound();
+        }
+
         return RedirectToAction(nameof(Index));
     }
 
