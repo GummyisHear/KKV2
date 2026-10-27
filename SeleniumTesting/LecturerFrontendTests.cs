@@ -67,4 +67,40 @@ public class LecturerFrontendTests
         Assert.Contains("Lecturer Details", driver.PageSource);
         Assert.Contains("/Lecturers/Details", driver.Url);
     }
+
+    [Fact]
+    public void Should_UpdateLecturer_FromFrontend()
+    {
+        using IWebDriver driver = new FirefoxDriver();
+
+        driver.Navigate().GoToUrl($"{BaseUrl}/Lecturers");
+
+        driver.FindElement(By.Id("IndexCreateNewLecturer_BTN")).Click();
+
+        driver.FindElement(By.Id("CU_Lecturer_FirstName"))
+            .SendKeys("UpdateTest");
+
+        driver.FindElement(By.Id("CU_Lecturer_LastName"))
+            .SendKeys("LecturerTest");
+
+        driver.FindElement(By.Id("CU_Lecturer_Qualifications"))
+            .SendKeys("Teacher");
+
+        driver.FindElement(By.Id("CU_Save_BTN")).Click();
+
+        driver.FindElement(By.Id("IndexTableLecturerUpdate_BTN")).Click();
+
+        var firstNameInput = driver.FindElement(By.Id("CU_Lecturer_FirstName"));
+
+        firstNameInput.Clear();
+        firstNameInput.SendKeys("UpdatedName");
+
+        driver.FindElement(By.Id("CU_Save_BTN")).Click();
+
+        Assert.Contains("UpdatedName", driver.PageSource);
+        Assert.Contains("LecturerTest", driver.PageSource);
+        Assert.Contains("Teacher", driver.PageSource);
+        Assert.DoesNotContain(">UpdateTest<", driver.PageSource);
+        Assert.Contains("/Lecturers", driver.Url);
+    }
 }
