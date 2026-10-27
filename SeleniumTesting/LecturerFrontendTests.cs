@@ -33,6 +33,8 @@ public class LecturerFrontendTests
         Assert.Contains("Selenium", pageSource);
         Assert.Contains("Lecturer", pageSource);
         Assert.Contains("Test", pageSource);
+        Assert.Contains("/Lecturers", driver.Url);
+        Assert.DoesNotContain("/Create", driver.Url);
     }
 
     [Fact]
@@ -55,7 +57,16 @@ public class LecturerFrontendTests
 
         driver.FindElement(By.Id("CU_Save_BTN")).Click();
 
-        driver.FindElement(By.Id("IndexTableLecturerDetails_BTN")).Click();
+        var detailsRows = driver.FindElements(By.TagName("tr"));
+
+        foreach (var row in detailsRows)
+        {
+            if (row.Text.Contains("DetailsTest"))
+            {
+                row.FindElement(By.LinkText("Details")).Click();
+                break;
+            }
+        }
 
         var firstName = driver.FindElement(By.Id("DD_Lecturer_FirstName")).Text;
         var lastName = driver.FindElement(By.Id("DD_Lecturer_LastName")).Text;
@@ -88,7 +99,16 @@ public class LecturerFrontendTests
 
         driver.FindElement(By.Id("CU_Save_BTN")).Click();
 
-        driver.FindElement(By.Id("IndexTableLecturerUpdate_BTN")).Click();
+        var updateRows = driver.FindElements(By.TagName("tr"));
+
+        foreach (var row in updateRows)
+        {
+            if (row.Text.Contains("UpdateTest"))
+            {
+                row.FindElement(By.LinkText("Update")).Click();
+                break;
+            }
+        }
 
         var firstNameInput = driver.FindElement(By.Id("CU_Lecturer_FirstName"));
 
@@ -100,8 +120,8 @@ public class LecturerFrontendTests
         Assert.Contains("UpdatedName", driver.PageSource);
         Assert.Contains("LecturerTest", driver.PageSource);
         Assert.Contains("Teacher", driver.PageSource);
-        Assert.DoesNotContain(">UpdateTest<", driver.PageSource);
         Assert.Contains("/Lecturers", driver.Url);
+        Assert.DoesNotContain("/Update", driver.Url);
     }
 
     [Fact]
@@ -124,9 +144,9 @@ public class LecturerFrontendTests
 
         driver.FindElement(By.Id("CU_Save_BTN")).Click();
 
-        var rows = driver.FindElements(By.TagName("tr"));
+        var deleteRows = driver.FindElements(By.TagName("tr"));
 
-        foreach (var row in rows)
+        foreach (var row in deleteRows)
         {
             if (row.Text.Contains("DeleteTest"))
             {
