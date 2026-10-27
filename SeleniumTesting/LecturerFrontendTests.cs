@@ -103,4 +103,45 @@ public class LecturerFrontendTests
         Assert.DoesNotContain(">UpdateTest<", driver.PageSource);
         Assert.Contains("/Lecturers", driver.Url);
     }
+
+    [Fact]
+    public void Should_DeleteLecturer_FromFrontend()
+    {
+        using IWebDriver driver = new FirefoxDriver();
+
+        driver.Navigate().GoToUrl($"{BaseUrl}/Lecturers");
+
+        driver.FindElement(By.Id("IndexCreateNewLecturer_BTN")).Click();
+
+        driver.FindElement(By.Id("CU_Lecturer_FirstName"))
+            .SendKeys("DeleteTest");
+
+        driver.FindElement(By.Id("CU_Lecturer_LastName"))
+            .SendKeys("LecturerTest");
+
+        driver.FindElement(By.Id("CU_Lecturer_Qualifications"))
+            .SendKeys("Teacher");
+
+        driver.FindElement(By.Id("CU_Save_BTN")).Click();
+
+        var rows = driver.FindElements(By.TagName("tr"));
+
+        foreach (var row in rows)
+        {
+            if (row.Text.Contains("DeleteTest"))
+            {
+                row.FindElement(By.LinkText("Delete")).Click();
+                break;
+            }
+        }
+
+        Assert.Contains("Delete Lecturer", driver.PageSource);
+        Assert.Contains("DeleteTest", driver.PageSource);
+        Assert.Contains("LecturerTest", driver.PageSource);
+
+        driver.FindElement(By.Id("DeleteDelete_BTN")).Click();
+
+        Assert.DoesNotContain("DeleteTest", driver.PageSource);
+        Assert.Contains("/Lecturers", driver.Url);
+    }
 }
