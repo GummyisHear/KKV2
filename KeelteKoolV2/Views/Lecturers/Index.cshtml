@@ -1,0 +1,60 @@
+@model IEnumerable<KeelteKoolV2.Models.Lecturers.LecturerViewModel>
+
+@{
+    ViewData["Title"] = "Lecturers";
+}
+
+<h1>Lecturers</h1>
+
+<p>
+    <a id="IndexCreateNewLecturer_BTN"
+       asp-action="Create"
+       asp-controller="Lecturers"
+       class="btn btn-primary">
+        Create New
+    </a>
+</p>
+
+<table id="IndexTable" class="table">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Qualifications</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Qualifications</td>
+
+                <td id="IndexTableLecturerActions">
+                    <a id="IndexTableLecturerDetails_BTN"
+                       asp-action="Details"
+                       asp-route-id="@item.Id">
+                        Details
+                    </a>
+                    |
+
+                    <a id="IndexTableLecturerUpdate_BTN"
+                       asp-action="Update"
+                       asp-route-id="@item.Id">
+                        Update
+                    </a>
+                    |
+
+                    <a id="IndexTableLecturerDelete_BTN"
+                       asp-action="Delete"
+                       asp-route-id="@item.Id">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -2,7 +2,7 @@
 using KeelteKoolV2.Core.DTO;
 using KeelteKoolV2.Core.ServiceInterface;
 using KeelteKoolV2.Data;
-
+using Microsoft.EntityFrameworkCore;
 namespace KeelteKoolV2.ApplicationServices.Services;
 
 public class LecturerServices : ILecturerServices
@@ -44,18 +44,49 @@ public class LecturerServices : ILecturerServices
         return domain;
     }
 
-    public Task<Lecturer> Delete(Guid id)
+    public async Task<Lecturer> Delete(Guid id)
     {
-        throw new NotImplementedException();
+        var lecturer = await _context.Lecturers
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (lecturer == null)
+        {
+            return null;
+        }
+
+        _context.Lecturers.Remove(lecturer);
+        await _context.SaveChangesAsync();
+
+        return lecturer;
     }
 
-    public Task<Lecturer> DetailAsync(Guid id)
+    public async Task<Lecturer> DetailAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _context.Lecturers
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        return result;
     }
 
-    public Task<Lecturer> Update(LecturerDTO dto)
+    public async Task<Lecturer> Update(LecturerDTO dto)
     {
-        throw new NotImplementedException();
+        var lecturer = await _context.Lecturers
+            .FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+        if (lecturer == null)
+        {
+            return null;
+        }
+
+        lecturer.FirstName = dto.FirstName;
+        lecturer.LastName = dto.LastName;
+        lecturer.Qualifications = dto.Qualifications;
+        lecturer.UserID = dto.UserID;
+        lecturer.ModifiedAt = DateTime.Now;
+
+        _context.Lecturers.Update(lecturer);
+        await _context.SaveChangesAsync();
+
+        return lecturer;
     }
 }

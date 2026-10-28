@@ -1,0 +1,47 @@
+@model KeelteKoolV2.Models.Lecturers.LecturerViewModel
+
+@{
+    ViewData["Title"] = "Lecturer Details";
+}
+
+<h1>Lecturer Details</h1>
+
+<dl class="row">
+    <dt class="col-sm-2">
+        First name
+    </dt>
+
+    <dd id="DD_Lecturer_FirstName" class="col-sm-10">
+        @Model.FirstName
+    </dd>
+
+    <dt class="col-sm-2">
+        Last name
+    </dt>
+
+    <dd id="DD_Lecturer_LastName" class="col-sm-10">
+        @Model.LastName
+    </dd>
+
+    <dt class="col-sm-2">
+        Qualifications
+    </dt>
+
+    <dd id="DD_Lecturer_Qualifications" class="col-sm-10">
+        @Model.Qualifications
+    </dd>
+
+    <dt class="col-sm-2">
+        User ID
+    </dt>
+
+    <dd id="DD_Lecturer_UserID" class="col-sm-10">
+        @Model.UserID
+    </dd>
+</dl>
+
+<a id="DetailsBack_BTN"
+   asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>

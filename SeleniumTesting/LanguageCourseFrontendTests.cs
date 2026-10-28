@@ -371,7 +371,7 @@ namespace KeelteKoolV2.SeleniumTesting
         private static IWebDriver TestSetup_NavigateToIndex()
         {
             IWebDriver driver = new FirefoxDriver(); //brauserit juhtiv ja seal tegutsev draiver
-            driver.Url = "https://localhost:7191/"; //navigeeritav aadress
+            driver.Url = "https://localhost:5117/"; //navigeeritav aadress
             Thread.Sleep(3000);
             IWebElement navigateToLanguageCourse = driver.FindElement(By.LinkText("Keelekursused"));//otsime tesitava osa lingi
             navigateToLanguageCourse.Click(); //simuleeritud tegevus elemendiga, antud juhul klikk

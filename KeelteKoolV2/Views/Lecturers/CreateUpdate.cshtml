@@ -1,0 +1,56 @@
+@model KeelteKoolV2.Models.Lecturers.LecturerCreateUpdateViewModel
+
+@{
+    ViewData["Title"] = Model.Id == Guid.Empty ? "Create Lecturer" : "Update Lecturer";
+}
+
+<h1>
+    @(Model.Id == Guid.Empty ? "Create Lecturer" : "Update Lecturer")
+</h1>
+
+<form asp-action="@(Model.Id == Guid.Empty ? "Create" : "Update")" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input id="CU_Lecturer_FirstName"
+               asp-for="FirstName"
+               class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input id="CU_Lecturer_LastName"
+               asp-for="LastName"
+               class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Qualifications"></label>
+        <input id="CU_Lecturer_Qualifications"
+               asp-for="Qualifications"
+               class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UserID"></label>
+        <input id="CU_Lecturer_UserID"
+               asp-for="UserID"
+               class="form-control" />
+    </div>
+
+    <br />
+
+    <button id="CU_Save_BTN"
+            type="submit"
+            class="btn btn-primary">
+        @(Model.Id == Guid.Empty ? "Create" : "Update")
+    </button>
+
+    <a id="CU_Cancel_BTN"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Back
+    </a>
+</form>
