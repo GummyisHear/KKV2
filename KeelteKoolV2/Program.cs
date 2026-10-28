@@ -21,6 +21,7 @@ namespace KeelteKoolV2
             builder.Services.AddScoped<ILanguageCoursesServices, LanguageCoursesServices>();
             builder.Services.AddScoped<IFileServices, FileServices>();
             builder.Services.AddScoped<ILecturerServices, LecturerServices>();
+            builder.Services.AddScoped<IStudentServices, StudentServices>();
             //apiclients
 
             //dbcontext

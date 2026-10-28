@@ -1,0 +1,48 @@
+﻿@model KeelteKoolV2.Models.Students.StudentViewModel
+
+@if (ViewBag.ViewType == "details")
+{
+    <h1>Õpilase andmed</h1>
+}
+else
+{
+    <h1>Kustuta õpilane</h1>
+}
+
+<div>
+    <h4>Õpilane</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Id)</dt>
+        <dd id="DD_StudentGuid" class="col-sm-10">@Html.DisplayFor(model => model.Id)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.FirstName)</dt>
+        <dd id="DD_StudentFirstName" class="col-sm-10">@Html.DisplayFor(model => model.FirstName)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.LastName)</dt>
+        <dd id="DD_StudentLastName" class="col-sm-10">@Html.DisplayFor(model => model.LastName)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Grades)</dt>
+        <dd id="DD_StudentGrades" class="col-sm-10">@Html.DisplayFor(model => model.Grades)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.CreatedAt)</dt>
+        <dd id="DD_StudentCreatedAt" class="col-sm-10">@Html.DisplayFor(model => model.CreatedAt)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ModifiedAt)</dt>
+        <dd id="DD_StudentModifiedAt" class="col-sm-10">@Html.DisplayFor(model => model.ModifiedAt)</dd>
+    </dl>
+
+    @if (ViewBag.ViewType == "delete")
+    {
+        <form asp-action="DeleteConfirmed" asp-controller="Students" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input id="DeleteDelete_BTN" type="submit" value="Kustuta" class="btn btn-danger" />
+            <a id="DeleteCancel_BTN" asp-action="Index" asp-controller="Students" class="btn btn-primary">Tühista</a>
+        </form>
+    }
+    else
+    {
+        <a id="DetailsUpdate_BTN" asp-action="Update" asp-controller="Students" asp-route-id="@Model.Id" class="btn btn-warning">Muuda</a>
+        <a id="DetailsBack_BTN" asp-action="Index" asp-controller="Students" class="btn btn-primary">Tagasi</a>
+    }
+</div>
