@@ -27,13 +27,13 @@
         {
             <tr>
                 <td>@rownumber</td>
-                <td>@student.FirstName</td>
-                <td>@student.LastName</td>
-                <td>@student.Grades</td>
-                <td>
-                    <a class="btn btn-secondary" asp-action="Details" asp-controller="Students" asp-route-id="@student.Id">Andmed</a>
-                    <a class="btn btn-warning" asp-action="Update" asp-controller="Students" asp-route-id="@student.Id">Muuda</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-controller="Students" asp-route-id="@student.Id">Kustuta</a>
+                <td id="IndexTableStudentFirstName">@student.FirstName</td>
+                <td id="IndexTableStudentLastName">@student.LastName</td>
+                <td id="IndexTableStudentGrades">@student.Grades</td>
+                <td id="IndexTableStudentActions">
+                    <a id="IndexTableStudentDetails_BTN" class="btn btn-secondary" asp-action="Details" asp-controller="Students" asp-route-id="@student.Id">Andmed</a>
+                    <a id="IndexTableStudentUpdate_BTN" class="btn btn-warning" asp-action="Update" asp-controller="Students" asp-route-id="@student.Id">Muuda</a>
+                    <a id="IndexTableStudentDelete_BTN" class="btn btn-danger" asp-action="Delete" asp-controller="Students" asp-route-id="@student.Id">Kustuta</a>
                 </td>
             </tr>
             rownumber++;
